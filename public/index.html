@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+    import {useState} from 'react';
+
+function App() {
+const [weight, setWeight] = useState(90);
+const [intensity, setIntensity] = useState(1.3);
+const [gender, setGender] = useState("male");
+const [result, setResult] = useState(0);
+
+function handleSubmit(e) {
+    e.preventDefault();
+    let calories = 0;
+    if (gender === "male") {
+        calories = (879 + 10.2 *weight) * intensity;
+    } else {
+        calories = (795 + 7.18 * weight) * intensity;
+    }
+    setResult(calories)
+}
+
+
+    return (
+        <>
+        <h3>calories</h3>
+        <form onSubmit={handleSubmit}>
+            <div>
+                <label>Weight</label>
+                <input name="weight" type="number" step="1" value={weight} onChange={e => setWeight(e.target.value)}></input>
+            </div>
+            <div>
+                <label>intentsity</label>
+                <select name="intensity" value={intensity} onChange={e => setIntensity(e.target.value)}>
+                    <option value="1.3">light</option>
+                    <option value="1.5">light</option>
+                </select>
+            </div>
+            <div>
+                <label>Gender</label>
+                <input type="radio" name="gender" value="male" defaultChecked onChange={e => setGender(e.target.value)} /><label>Male</label>
+                <input type="radio" name="gender" value="female" onChange={e => setGender(e.target.value)} /><label>female</label>
+            </div>
+            <div>
+                <output>{result.toFixed(0)}</output>
+            </div>
+            <button>calculate</button>
+        </form>
+        </>
+    );
+}
+ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+    <!--
+      Note: this page is a great way to try React but it's not suitable for production.
+      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+      Read this section for a production-ready setup with JSX:
+      https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project
+
+      In a larger project, you can use an integrated toolchain that includes JSX instead:
+      https://reactjs.org/docs/create-a-new-react-app.html
+
+      You can also use React without JSX, in which case you can remove Babel:
+      https://reactjs.org/docs/react-without-jsx.html
+    -->
+  </body>
+</html>
